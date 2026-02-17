@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import type { Project } from "@/types/project";
 import { filterProjects } from "@/lib";
@@ -15,6 +16,8 @@ export default function ProjectsWithFilters({
   projects,
   onSelectProject,
 }: ProjectsWithFiltersProps) {
+  const router = useRouter();
+  const handleSelectProject = onSelectProject ?? ((project: Project) => router.push(`/projects/${project.id}`));
   const [selectedStatuses, setSelectedStatuses] = useState<Project["status"][]>([]);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -47,7 +50,7 @@ export default function ProjectsWithFilters({
       ) : (
         <ProjectList
           projects={filteredProjects}
-          onSelectProject={onSelectProject}
+          onSelectProject={handleSelectProject}
         />
       )}
     </div>
