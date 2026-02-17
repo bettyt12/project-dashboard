@@ -7,6 +7,5 @@ export interface Project {
   status: ProjectStatus;
   startDate: string;
   endDate: string;
-  /** Optional: short description (extra field per assignment) */
   description?: string;
 }
