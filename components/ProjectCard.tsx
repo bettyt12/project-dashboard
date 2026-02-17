@@ -8,6 +8,7 @@ interface ProjectCardProps {
 }
 
 function formatDate(dateStr: string): string {
+  if (!dateStr?.trim()) return "—";
   try {
     return new Date(dateStr).toLocaleDateString("en-US", {
       year: "numeric",
@@ -15,7 +16,7 @@ function formatDate(dateStr: string): string {
       day: "numeric",
     });
   } catch {
-    return dateStr;
+    return "—";
   }
 }
 
@@ -49,13 +50,13 @@ export default function ProjectCard({ project, onClick }: ProjectCardProps) {
       className="rounded-lg border border-zinc-200 bg-white p-4 text-left shadow-sm transition-shadow hover:shadow-md focus:outline-none focus:ring-2 focus:ring-zinc-400"
     >
       <div className="flex flex-wrap items-start justify-between gap-2">
-        <h2 className="min-w-0 flex-1 text-base font-semibold text-zinc-900 truncate" title={project.name}>
-          {project.name}
+        <h2 className="min-w-0 flex-1 text-base font-semibold text-zinc-900 truncate" title={project.name || undefined}>
+          {project.name?.trim() || "—"}
         </h2>
         <StatusBadge status={project.status} />
       </div>
-      <p className="mt-1 text-sm text-zinc-600 truncate" title={project.clientName}>
-        {project.clientName}
+      <p className="mt-1 text-sm text-zinc-600 truncate" title={project.clientName || undefined}>
+        {project.clientName?.trim() || "—"}
       </p>
       <dl className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-zinc-500">
         <div>

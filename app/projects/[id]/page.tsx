@@ -4,14 +4,16 @@ import { projects } from "@/data";
 import type { ProjectStatus } from "@/types/project";
 
 function formatDate(dateStr: string): string {
+  if (!dateStr?.trim()) return "—";
   try {
-    return new Date(dateStr).toLocaleDateString("en-US", {
+    const formatted = new Date(dateStr).toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
       day: "numeric",
     });
+    return formatted;
   } catch {
-    return dateStr;
+    return "—";
   }
 }
 
@@ -54,7 +56,7 @@ export default async function ProjectDetailPage({
       <article className="rounded-lg border border-zinc-200 bg-white p-6 shadow-sm">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <h1 className="min-w-0 flex-1 text-2xl font-semibold text-zinc-900 break-word">
-            {project.name}
+            {project.name?.trim() || "—"}
           </h1>
           <StatusBadge status={project.status} />
         </div>
@@ -63,7 +65,7 @@ export default async function ProjectDetailPage({
           <div>
             <dt className="text-sm font-medium text-zinc-500">Client</dt>
             <dd className="mt-0.5 text-zinc-900 break-word">
-              {project.clientName}
+              {project.clientName?.trim() || "—"}
             </dd>
           </div>
           <div>
@@ -90,7 +92,7 @@ export default async function ProjectDetailPage({
               </span>
             </dt>
             <dd className="mt-0.5 text-zinc-900 break-word">
-              {project.description ?? "—"}
+              {(project.description ?? "").trim() || "—"}
             </dd>
           </div>
         </dl>
